@@ -1,4 +1,6 @@
 from README_genie.src.utils import (
+    get_all_file_paths,
+    get_file_contents,
     authenticate_model,
     openai_llm,
 )
@@ -14,18 +16,39 @@ PRE_PROMPT= "You are a skilled speaker and writter. You speak and write very con
 QUERY= "Tell me a quick joke"
 
 
+HOME_DIRECTORY= os.environ["HOME"]
+TARGET_REPO_DIRECTORY= "/GitHub/biokit"
+CURRENT_WORKING_DIRECTORY= os.environ["PWD"]
+OUTPUT_FILE= "/output_file.txt"
+GIT_IGNORE= "/.gitignore"
+CUSTOM_EXCLUSIONS= [".ipynb", ".csv", ".fastq", ".fasta", ".rst"]
 
-client= authenticate_model(
-    api_key= OPENAI_API_KEY, 
-    organization= OPENAI_ORGANISATION_ID, 
-    project= OPENAI_PROJECT_ID
+
+
+all_files_full_path = get_all_file_paths(
+    directory_path=HOME_DIRECTORY+TARGET_REPO_DIRECTORY
     )
 
-response= openai_llm(
-    client= client,
-    model= OPEN_AI_MODEL,
-    preprompt= PRE_PROMPT,
-    prompt= QUERY,
-)
+cleaned_files= get_file_contents(
+    exclution_path= CURRENT_WORKING_DIRECTORY+GIT_IGNORE,
+    ouput_file_path= CURRENT_WORKING_DIRECTORY+OUTPUT_FILE,
+    all_file_paths= all_files_full_path,
+    custom_exclusions= CUSTOM_EXCLUSIONS,
+    )
 
-print(response)
+
+
+# client= authenticate_model(
+#     api_key= OPENAI_API_KEY, 
+#     organization= OPENAI_ORGANISATION_ID, 
+#     project= OPENAI_PROJECT_ID
+#     )
+
+# response= openai_llm(
+#     client= client,
+#     model= OPEN_AI_MODEL,
+#     preprompt= PRE_PROMPT,
+#     prompt= QUERY,
+# )
+
+# print(response)
