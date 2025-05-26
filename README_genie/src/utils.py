@@ -95,7 +95,7 @@ def get_file_contents(all_file_paths, ouput_file_path, exclution_path, custom_ex
                         for line in read_file:
                             if line.strip():
                                 write_file.write(line)
-                    # print(file_name)
+                    print(file_name)
                 except:
                     pass
 

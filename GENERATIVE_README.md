@@ -1,59 +1,63 @@
 # Forecast Engine
 
-An interactive Streamlit application for univariate time-series forecasting using Facebook’s Prophet library. Upload your CSV, validate date formats and data granularity, visualize historical trends, specify seasonality and forecast horizons, and generate future forecasts with a single click.
+An interactive Streamlit application for univariate time‐series forecasting using Facebook’s Prophet library. Upload your data, validate date formats and granularity, visualize historical trends, and generate future forecasts with customizable seasonality.
 
 ---
 
 ## Table of Contents
 
 - [About This Project](#about-this-project)  
-- [Features](#features)  
 - [Project Description](#project-description)  
+- [Features](#features)  
 - [Getting Started](#getting-started)  
   - [Prerequisites](#prerequisites)  
   - [Installation](#installation)  
-  - [Running the App](#running-the-app)  
-  - [Using a Dev Container](#using-a-dev-container)  
+  - [Quick Start](#quick-start)  
 - [Usage](#usage)  
-- [Configuration](#configuration)  
-- [File Structure](#file-structure)  
+  - [Data Upload & Validation](#data-upload--validation)  
+  - [Historical Plot](#historical-plot)  
+  - [Forecasting](#forecasting)  
+- [Development](#development)  
+  - [Dev Container](#dev-container)  
+- [Project Structure](#project-structure)  
 - [Contributing](#contributing)  
-- [License](#license)
+- [License](#license)  
 
 ---
 
 ## About This Project
 
-Forecast Engine demonstrates how to build a minimal, interactive time-series forecasting web application with:
+This repository provides an end-to-end demonstration of univariate time-series forecasting:
 
-- **Prophet** for model fitting and seasonality handling  
-- **Streamlit** for UI and rapid prototyping  
-- **Altair**, **Matplotlib**, and **Plotly** for visualizations  
-
----
-
-## Features
-
-- Upload a CSV file with date (`DD-MM-YYYY`) and target columns.  
-- Validate date format and enforce data granularity (daily/weekly/monthly/yearly).  
-- Interactive historical data plotting.  
-- Specify the length of a full seasonality cycle (in days/weeks/months/years).  
-- Choose a future forecasting horizon.  
-- Generate and visualize model forecasts with confidence intervals.  
+- Built with **Streamlit** for interactive web UI  
+- Powered by **Prophet** for robust seasonality modeling  
+- Leverages **Pandas**, **NumPy**, **Altair** and **Matplotlib** for data processing and visualization  
 
 ---
 
 ## Project Description
 
-Forecast Engine is designed for data scientists, analysts, and hobbyists who need a quick, illustrative tool to:
+Forecast Engine guides users through:
 
-1. **Inspect** uploaded time-series data for formatting and completeness.  
-2. **Resample** data to uniform intervals and identify missing periods.  
-3. **Visualize** historical trends and seasonality interactively.  
-4. **Configure** and **fit** a Prophet model with custom seasonal components.  
-5. **Forecast** future values for any specified horizon with auto-plotted results.  
+1. **Uploading** a CSV containing a date column (in `DD-MM-YYYY` format) and a target variable.  
+2. **Validating** date formats and detecting missing observations at the chosen granularity (daily/weekly/monthly/yearly).  
+3. **Visualizing** the cleaned time series with an interactive Altair line chart.  
+4. **Specifying** the dominant seasonality period (e.g., 12 months) and the forecast horizon.  
+5. **Fitting** a Prophet model with a custom seasonality component and **plotting** future predictions.  
 
-It can be extended to include additional regressors, multiple seasonalities, or alternative forecasting backends.
+Use cases include sales forecasting, web traffic prediction, energy demand planning, or any scenario with regular temporal cycles.
+
+---
+
+## Features
+
+- Interactive file upload and column selection  
+- Automatic date‐format checking and resampling  
+- Missing‐data detection for chosen granularity  
+- Exploratory Altair chart with zoom & tooltips  
+- Custom seasonality addition to Prophet model  
+- Future‐forecast plotting via Matplotlib  
+- Configurable theme and upload limits via `.streamlit/config.toml`  
 
 ---
 
@@ -61,112 +65,122 @@ It can be extended to include additional regressors, multiple seasonalities, or 
 
 ### Prerequisites
 
-- Python 3.10+  
-- Git (optional, to clone the repo)  
+- Python 3.10  
+- [pip](https://pip.pypa.io/)  
+- (Optional) [Conda](https://docs.conda.io/) for environment management  
+- Docker & VS Code (for Dev Container setup)  
 
 ### Installation
 
-1. Clone this repository (or download the ZIP):
-
+1. Clone the repo:  
    ```bash
-   git clone https://github.com/your-username/forecast_engine.git
+   git clone https://github.com/behzadrowshanravan/forecast_engine.git
    cd forecast_engine
    ```
-
-2. Create and activate a virtual environment (recommended):
-
+2. Install dependencies via pip:  
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+   pip3 install -r requirements.txt
    ```
 
-3. Install Python dependencies:
+Alternatively, create a Conda environment:
 
-   ```bash
-   pip install --upgrade pip
-   pip install -r requirements.txt
-   ```
+```bash
+conda create -n forecast_env python=3.10
+conda activate forecast_env
+pip install -r requirements.txt
+```
 
-### Running the App
+### Quick Start
 
-The simplest way to launch Forecast Engine:
+Run the helper script:
 
 ```bash
 sh app.sh
 ```
 
-This will install any missing dependencies and start the Streamlit server on port 8501.  
-Then open your browser at `http://localhost:8501`.
+Then open your browser at <http://localhost:8501>.
 
-Alternatively, run manually:
+Or launch manually:
 
 ```bash
 streamlit run main.py --server.port 8501
 ```
 
-### Using a Dev Container
-
-This project includes a VS Code Dev Container configuration:
-
-1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop) and the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).  
-2. In VS Code, open the repository and choose **Reopen in Container**.  
-3. Once built, dependencies (Python 3.10 + tools) are pre-installed.  
-4. Run the app:
-
-   ```bash
-   streamlit run main.py
-   ```
-
 ---
 
 ## Usage
 
-1. **Upload** your CSV file via the file uploader.  
-2. **Select** the date column (must be in `DD-MM-YYYY` format).  
-3. **Select** the target/value column to forecast.  
-4. **Choose** data granularity (daily/weekly/monthly/yearly).  
-5. **Generate** the historical data plot.  
-6. **Specify**:
-   - Number of smallest units per full seasonal cycle (e.g., 12 months for annual seasonality).  
-   - Forecast horizon in the same units.  
-7. **Generate** the future forecast plot.  
+### Data Upload & Validation
 
-All steps feature on-the-fly validation; incorrect formats or missing intervals will prompt actionable feedback.
+1. Click **Browse files** and select your CSV.  
+2. Choose the **date column** (must be `DD-MM-YYYY`).  
+3. Select the **target variable** column.  
+4. Pick a **granularity** (daily/weekly/monthly/yearly).  
+5. The app checks for missing data at that frequency—if none, the workflow continues.
+
+### Historical Plot
+
+- Click **Generate Data Plot** to render an interactive line chart of your time series.  
+- Zoom, pan, and hover to inspect timestamps.
+
+### Forecasting
+
+1. Enter the approximate number of units (e.g., months) in one full seasonal cycle.  
+2. Specify the number of future units to predict.  
+3. Click **Generate Future Plot**.  
+4. View the forecast with the historical cutoff marked by a vertical line.
 
 ---
 
-## Configuration
+## Development
 
-- `.streamlit/config.toml`: Streamlit UI theming, upload size, and error-detail settings.  
-- `app.sh`: Convenience script to install dependencies and launch the app.  
-- Dev Container files (`.devcontainer/`): Dockerfile and config for an isolated development environment.
+Clone the repository and open in VS Code. A Dev Container is configured for instant setup.
+
+### Dev Container
+
+The `.devcontainer/` folder contains:
+
+- **Dockerfile**: Base image with Python tooling  
+- **devcontainer.json**: Mounts the workspace, installs Python 3.10  
+
+To launch:
+
+1. Install the **Remote – Containers** extension in VS Code.  
+2. Reopen the folder in container.  
+3. All dependencies will be available; run `sh app.sh` inside the container.
 
 ---
 
-## File Structure
+## Project Structure
 
 ```
-.
-├── .devcontainer/            # VS Code dev container setup
+forecast_engine/
+├── .devcontainer/
 │   ├── Dockerfile
 │   └── devcontainer.json
-├── .streamlit/               # Streamlit configuration
+├── .streamlit/
 │   └── config.toml
-├── forecast_engine/          # Source package
+├── forecast_engine/
 │   └── src/
-│       └── utils.py          # CSV reader, validators, model-fitting
-├── app.sh                    # Shell script to install & run
-├── LICENSE                   # MIT License
-├── main.py                   # Streamlit app entry point
-└── requirements.txt          # Python dependencies
+│       └── utils.py       # I/O, validation, and Prophet‐fitting functions
+├── app.sh                 # Install & launch script
+├── main.py                # Streamlit app entry point
+├── requirements.txt
+├── LICENSE
+└── README.md
 ```
 
 ---
 
 ## Contributing
 
-Contributions are welcome! Please fork the repo, create a feature branch, and submit a pull request.  
-For bug reports or feature requests, open an issue on GitHub.
+1. Fork the repository  
+2. Create a feature branch (`git checkout -b feature/foo`)  
+3. Commit your changes (`git commit -am 'Add foo'`)  
+4. Push to the branch (`git push origin feature/foo`)  
+5. Open a Pull Request  
+
+Please ensure code is linted and includes docstrings where appropriate.
 
 ---
 
