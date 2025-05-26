@@ -58,7 +58,6 @@ def get_all_file_paths(directory_path):
     file_paths = []
     for root, dirs, files in os.walk(directory_path):
         for file in files:
-            # Construct absolute file path
             absolute_path = os.path.abspath(os.path.join(root, file))
             file_paths.append(absolute_path)
     
@@ -72,12 +71,26 @@ def get_file_contents(all_file_paths, ouput_file_path, exclution_path, custom_ex
         if not exclusion_list(exclution_path= exclution_path, full_file_path= full_file_path) and file_name != ".gitignore":
             if sum([x not in file_name for x in custom_exclusions]) == len(custom_exclusions):
                 try:
-                    with open(file=f"{full_file_path}", mode="r") as f:
-                        file_contents= f.read()
-                    with open(file=ouput_file_path, mode="a") as o:
-                        o.write(f"FILE_PATH: {full_file_path}\n")
-                        o.write("FILE_CONTENT:\n")
-                        o.write(file_contents)
+                    ## This code preserves all the spaces and empty lines
+                    # with open(file=f"{full_file_path}", mode="r") as f:
+                    #     file_contents= f.read()
+                    # with open(file=ouput_file_path, mode="a") as o:
+                    #     o.write(f"FILE_PATH: {full_file_path}\n")
+                    #     o.write("FILE_CONTENT:\n")
+                    #     o.write(file_contents)
+                    
+                    ## This code removes only empty lines!
+                    with open(
+                        file=f"{full_file_path}", mode="r") as read_file, open(
+                            file=ouput_file_path, mode="a") as write_file:
+                        write_file.write("\n")
+                        write_file.write(f"FILE_PATH: {full_file_path}\n")
+                        write_file.write("FILE_CONTENT:\n")
+                        for line in read_file:
+                            if line.strip():
+                                write_file.write(line)
                     print(file_name)
                 except:
                     pass
+
+
