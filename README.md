@@ -11,24 +11,24 @@ This `README.md` was produced by the README_genie itself.
 - **Automated README Generation**  
   • Recursively collects all files in your target repo, excluding Git-ignored files and user-specified extensions (.csv, .ipynb, etc.).  
   • Concatenates file paths and contents into a prompt payload.  
-  • Uses OpenAI’s API (via the `openai` Python package) to synthesize a professional README in Markdown.  
+  • Uses OpenAI’s API (via the `openai` Python package) to synthesise a professional README in Markdown.  
 
 - **Key Capabilities**  
-  • Customizable exclusion rules: fine-tune which files or directories are considered.  
+  • Customisable exclusion rules: fine-tune which files or directories are considered.  
   • Configurable OpenAI model selection (e.g., “o4-mini-2025-04-16” or “gpt-4.1-2025-04-14”).  
   • Easy integration into CI/CD workflows to keep README content in sync with code changes.  
 
 - **Use Cases**  
   • Bootstrapping documentation for new or legacy repositories.  
   • Maintaining up-to-date READMEs in continuously evolving codebases.  
-  • Standardizing project overviews and usage instructions across teams.  
+  • Standardising project overviews and usage instructions across teams.  
 
 ---
 
 ## Getting Started
 
 ### Prerequisites  
-- Python 3.8 or higher  
+- Python 3.10 or higher  
 - An OpenAI account with API access  
 - Git repository with a well-configured `.gitignore`  
 
