@@ -150,6 +150,13 @@ st.write(x, "squared is", x * x)
 Now run it to open the app!
 streamlit run streamlit_app.py
 
+I want the output to be slightly custom. First I want the spelling of the contents to be British English
+and NOT American English spelling. For example it is written initialise NOT initialize. Secondly, right 
+after the project title, before the about this project section,
+I want you to include the following text, which I'm providing as markdown.
+
+This `README.md` was created using my package [README_genie](https://github.com/browshanravan/README_genie).
+
 REMEMBER, your response to the provided code/text blocks needs to be a README.md style markdown text
 as described in details above. Please do not include any unnessessary reponses such as 
 "ok, here is the markdown style text requested" or "ok can I help with anything else?".
